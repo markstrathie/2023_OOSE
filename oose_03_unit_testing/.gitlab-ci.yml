@@ -1,0 +1,27 @@
+#This script does some basic checking on your files to see if you are missing anything obvious
+#...such as uploading code that does not compile or is missing a file mentioned in the lab sheet.
+#
+#Successful run of the pipeline is not a guarantee the behaviour of the code is correct.
+stages:
+  - build
+
+image: openjdk:8
+
+
+compile:
+  stage: build
+  script:
+    - echo "Building"
+    - java -version
+    - rm -rf bin
+    - mkdir bin
+    - javac -cp "lib/*" -d bin -sourcepath src src/main/java/*.java
+
+namecheck:
+  stage: build
+  script:
+    - if ! [ -f "src/test/java/FireFamilyTest.java" ]; then exit 1; fi
+    - if ! [ -f "src/test/java/PlantFamilyTest.java" ]; then exit 1; fi
+    - if ! [ -f "src/test/java/ScorchitileTest.java" ]; then exit 1; fi
+    - if ! [ -f "src/test/java/SeedatopsTest.java" ]; then exit 1; fi
+    - if ! [ -f "src/test/java/TrainerTest.java" ]; then exit 1; fi

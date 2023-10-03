@@ -1,0 +1,17 @@
+#This script does some basic checking on your files to see if you are missing anything obvious'
+#...such as uploading code that does not compile or is missing a file mentioned in the lab sheet.
+#
+#Successful run of the pipeline is not a guarantee the behaviour of the code is correct.
+
+image: openjdk:8
+
+
+build:
+    stage: build
+    script: 
+        - echo "Building"
+        - java -version
+        - mkdir bin 
+        - javac -cp "lib/*" -d bin -sourcepath src src/main/java/*.java
+#        - javac -cp "lib/*" -d bin -sourcepath src src/test/java/*.java
+

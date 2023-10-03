@@ -1,0 +1,36 @@
+#This script does some basic checking on your files to see if you are missing anything obvious
+#...such as uploading code that does not compile or is missing a file mentioned in the lab sheet.
+#
+#Successful run of the pipeline is not a guarantee the behaviour of the code is correct.
+stages:
+  - build
+  - test #No unit tests this week
+
+image: maven:latest
+
+
+compile:
+  stage: build
+  script:
+    - mvn compiler:compile
+
+name-check:
+  stage: test
+  script:
+    - if ! [ -f "src/main/java/NoMaintenance.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/Bike.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/Car.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/EasyMaintenance.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/FastTravel.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/HardMaintenance.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/MaintenanceBehaviour.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/NoTravel.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/SlowTravel.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/TravelBehaviour.java" ]; then exit 1; fi 
+    - if ! [ -f "src/main/java/Vehicle.java" ]; then exit 1; fi 
+
+#unit-test:
+#  stage: test
+ # script:
+#    - mvn clean
+#    - mvn test
